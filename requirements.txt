@@ -1,0 +1,16 @@
+streamlit
+pandas
+yfinance
+matplotlib
+streamlit-autorefresh
+alpha-vantage
+alpaca-trade-api
+torch
+numpy
+scikit-learn
+
+# Development dependencies
+pytest
+pytest-mock
+black
+flake8
