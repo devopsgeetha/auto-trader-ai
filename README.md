@@ -7,9 +7,11 @@ A paper trading application built with Streamlit that implements various trading
 - 📈 Multiple technical indicators (SMA, RSI, MACD)
 - 🤖 AI-powered direction prediction using transformer models
 - 📊 Real-time portfolio tracking and performance metrics
-- 🔄 Live price updates with auto-refresh
-- 📋 Comprehensive backtesting and analysis
+- 🎯 Custom ticker input - analyze any stock symbol
+- 📦 Enhanced portfolio view with individual ticker contributions
+- 📋 Comprehensive backtesting with Buy & Hold comparison
 - 💼 Paper trading simulation (no real money involved)
+- 🎨 Professional charts with BUY/SELL signal markers
 
 ## Setup
 
@@ -70,11 +72,16 @@ auto-trader-ai/
 
 ## Usage
 
-1. **Select Tickers**: Choose from predefined tickers or add your own
-2. **Configure Strategy**: Adjust SMA windows, RSI/MACD settings
-3. **Enable AI**: Toggle transformer-based predictions
+1. **Select Tickers**: Choose from preset tickers or enter custom symbols (e.g., META, NFLX)
+2. **Configure Strategy**: Adjust SMA windows, RSI/MACD settings, risk management
+3. **Enable AI** (optional): Toggle transformer-based predictions
 4. **Set Portfolio**: Define capital and trading costs
-5. **Run Strategy**: Execute backtesting and view results
+5. **Run Strategy**: Execute backtesting and view results in 4 tabs:
+   - 📈 Chart with price, SMAs, and signal markers
+   - 📊 Performance metrics and equity curves
+   - 📐 Technical indicators (RSI, MACD, volatility)
+   - 📅 Recent trading signals
+6. **Portfolio View**: Automatically shown when analyzing 2+ tickers
 
 ## Features Detail
 

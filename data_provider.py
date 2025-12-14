@@ -1,42 +1,72 @@
-import os
+# data_provider.py
+
+import requests
 import pandas as pd
-from alpha_vantage.timeseries import TimeSeries
+import time
 
-API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
+BASE_URL = "https://query1.finance.yahoo.com/v8/finance/chart/{}"
 
-if not API_KEY:
-    # Try a fallback or provide a more helpful error message
-    print("⚠️  ALPHAVANTAGE_API_KEY not found in environment variables.")
-    print("💡 Solutions:")
-    print("   1. Restart your terminal after running 'setx ALPHAVANTAGE_API_KEY your_key'")
-    print("   2. Set in current session: $env:ALPHAVANTAGE_API_KEY = 'your_key'")
-    print("   3. Create a .env file with ALPHAVANTAGE_API_KEY=your_key")
-    raise ValueError("❌ Missing AlphaVantage API key. Set ALPHAVANTAGE_API_KEY first.")
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "application/json"
+}
 
-def get_price_history(ticker: str, period: str = "3mo") -> pd.DataFrame:
-    ts = TimeSeries(key=API_KEY, output_format='pandas')
+def get_price_history(ticker, period="3mo", retries=3):
+    params = {}
 
-    # Map UI period → AV function options
-    if period in ["3mo", "6mo"]:
-        data, meta = ts.get_daily(symbol=ticker, outputsize='compact')
+    if period.endswith("mo"):
+        params["range"] = period
     else:
-        data, meta = ts.get_daily(symbol=ticker, outputsize='full')
+        params["period1"] = "0"
+        params["period2"] = str(int(time.time()))
 
-    df = data.rename(columns={
-        "1. open": "open",
-        "2. high": "high",
-        "3. low": "low",
-        "4. close": "close",
-        "5. volume": "volume",
-    })
+    params["interval"] = "1d"
 
-    df.index = pd.to_datetime(df.index)
-    df = df.sort_index().reset_index().rename(columns={"index": "date"})
+    for attempt in range(1, retries + 1):
+        try:
+            resp = requests.get(BASE_URL.format(ticker), params=params, headers=HEADERS, timeout=10)
 
-    # Limit range manually for UI periods
-    if period == "3mo":
-        df = df.tail(60)  # ~3 months
-    elif period == "6mo":
-        df = df.tail(120)
+            if resp.status_code != 200:
+                print(f"HTTP {resp.status_code} for {ticker} (attempt {attempt}/{retries})")
+                time.sleep(attempt)
+                continue
 
-    return df
+            data = resp.json()
+            result = data.get("chart", {}).get("result", None)
+
+            if not result:
+                print(f"⚠️ No chart result for {ticker} (attempt {attempt}/{retries})")
+                time.sleep(attempt)
+                continue
+
+            res = result[0]
+            timestamps = res.get("timestamp", [])
+            if not timestamps:
+                print(f"⚠️ No timestamps for {ticker} (attempt {attempt}/{retries})")
+                time.sleep(attempt)
+                continue
+
+            prices = res["indicators"]["quote"][0]
+
+            df = pd.DataFrame({
+                "date": pd.to_datetime(timestamps, unit="s"),
+                "open": prices.get("open", []),
+                "high": prices.get("high", []),
+                "low": prices.get("low", []),
+                "close": prices.get("close", []),
+                "volume": prices.get("volume", []),
+            })
+
+            df.dropna(inplace=True)
+            df.sort_values("date", inplace=True)
+            df.reset_index(drop=True, inplace=True)
+
+            return df
+
+        except Exception as e:
+            print(f"❌ Error fetching {ticker}: {e} (attempt {attempt}/{retries})")
+            time.sleep(attempt)
+
+    print(f"🚫 Final failure fetching {ticker}")
+    return pd.DataFrame()

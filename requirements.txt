@@ -8,6 +8,7 @@ alpaca-trade-api
 torch
 numpy
 scikit-learn
+python-dotenv
 
 # Development dependencies
 pytest

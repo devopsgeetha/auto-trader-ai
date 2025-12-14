@@ -98,6 +98,11 @@ def apply_sma_crossover(
         df["signal"] = "HOLD"
         df.loc[buy_mask, "signal"] = "BUY"
         df.loc[sell_mask, "signal"] = "SELL"
+    else:
+        # Initialize columns with NaN when not in use
+        df["rsi"] = np.nan
+        df["macd"] = np.nan
+        df["macd_signal"] = np.nan
 
     # ---- 4) Optional volatility filter ----
     if use_vol_filter and max_vol_pct is not None:
