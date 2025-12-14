@@ -12,8 +12,8 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from metrics import compute_performance_stats
-from strategy import calculate_sma
+from src.metrics import compute_performance_stats
+from src.strategy import calculate_sma
 
 class TestMetrics(unittest.TestCase):
     """Test performance metrics calculations."""

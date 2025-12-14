@@ -8,8 +8,6 @@ services:
     container_name: auto-trader-ai
     ports:
       - "8501:8501"
-    environment:
-      # No API keys required (uses Yahoo Finance)
     volumes:
       # Mount local directory for development (optional - comment out for production)
       - .:/app

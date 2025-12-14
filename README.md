@@ -77,7 +77,7 @@ pip install -r requirements.txt
 
 #### 4. Run the application
 ```bash
-streamlit run trader_app.py
+streamlit run src/trader_app.py
 ```
 
 The app will be available at http://localhost:8501
@@ -86,14 +86,19 @@ The app will be available at http://localhost:8501
 
 ```
 auto-trader-ai/
-├── trader_app.py          # Main Streamlit application
-├── data_provider.py       # Yahoo Finance data fetching
-├── strategy.py           # Trading strategy implementations
-├── ai_models.py          # AI prediction models
-├── model_transformer.py  # Transformer-based price prediction
-# live trading interface removed
-├── metrics.py           # Performance calculation utilities
-└── requirements.txt     # Python dependencies
+├── src/
+│   ├── __init__.py
+│   ├── trader_app.py          # Main Streamlit application
+│   ├── data_provider.py       # Yahoo Finance data fetching
+│   ├── strategy.py            # Trading strategy implementations
+│   ├── ai_models.py           # AI prediction models
+│   ├── model_transformer.py   # Transformer-based price prediction
+│   ├── metrics.py             # Performance calculation utilities
+│   └── config.py              # Configuration settings
+├── tests/                     # Unit tests
+├── requirements.txt           # Python dependencies
+├── Dockerfile                 # Docker image definition
+└── docker-compose.yml         # Docker orchestration
 ```
 
 ## Usage

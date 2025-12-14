@@ -5,9 +5,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from functools import reduce
 
-from data_provider import get_price_history
-from strategy import apply_sma_crossover
-from ai_models import add_direction_prediction
+from src.data_provider import get_price_history
+from src.strategy import apply_sma_crossover
+from src.ai_models import add_direction_prediction
 
 # Must be first Streamlit command
 st.set_page_config(page_title="Auto-Trading AI (Paper)", page_icon="📈")
