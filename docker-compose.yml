@@ -9,8 +9,7 @@ services:
     ports:
       - "8501:8501"
     environment:
-      # AlphaVantage API key (required)
-      - ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}
+      # No API keys required (uses Yahoo Finance)
     volumes:
       # Mount local directory for development (optional - comment out for production)
       - .:/app

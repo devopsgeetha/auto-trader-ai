@@ -18,16 +18,7 @@ class TradingConfig:
 @dataclass 
 class APIConfig:
     """Configuration for API keys and endpoints."""
-    alphavantage_key: Optional[str] = None
-    alpaca_key: Optional[str] = None
-    alpaca_secret: Optional[str] = None
-    alpaca_base_url: str = "https://paper-api.alpaca.markets"  # Paper trading
-    
-    def __post_init__(self):
-        # Load from environment variables
-        self.alphavantage_key = os.getenv("ALPHAVANTAGE_API_KEY")
-        self.alpaca_key = os.getenv("ALPACA_KEY") 
-        self.alpaca_secret = os.getenv("ALPACA_SECRET")
+    pass  # No external API keys required (uses yfinance)
 
 @dataclass
 class ModelConfig:

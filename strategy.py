@@ -211,3 +211,24 @@ def _compute_macd(series: pd.Series, fast: int = 12, slow: int = 26, signal: int
     macd_signal = macd.ewm(span=signal, adjust=False).mean()
     macd_hist = macd - macd_signal
     return macd, macd_signal, macd_hist
+
+
+def calculate_sma(df: pd.DataFrame, price_col: str, window: int) -> pd.DataFrame:
+    """Calculate simple moving average (SMA) for a given price column.
+
+    Returns a copy of the DataFrame with a new column named `sma_{window}`.
+    The function preserves the input index and uses `min_periods=window`
+    so the SMA is NaN until enough observations are available (matching tests).
+    """
+    df = df.copy()
+
+    # Ensure we have the requested column (case-insensitive)
+    cols = {c.lower(): c for c in df.columns}
+    key = price_col.lower()
+    if key not in cols:
+        raise KeyError(f"Price column '{price_col}' not found. Available: {list(df.columns)}")
+
+    col_name = cols[key]
+    sma_col = f"sma_{window}"
+    df[sma_col] = df[col_name].rolling(window=window, min_periods=window).mean()
+    return df

@@ -21,7 +21,6 @@ Choose either **Docker** (recommended) or **Local** setup:
 
 #### Prerequisites
 - Docker and Docker Compose installed
-- Get your AlphaVantage API key: https://www.alphavantage.co/support/#api-key
 
 #### Quick Start
 ```bash
@@ -29,13 +28,7 @@ Choose either **Docker** (recommended) or **Local** setup:
 git clone <repository-url>
 cd auto-trader-ai
 
-# 2. Create .env file from example
-cp .env.example .env
-
-# 3. Edit .env and add your API key
-# ALPHAVANTAGE_API_KEY=your_actual_api_key
-
-# 4. Build and run with Docker Compose
+# 2. Build and run with Docker Compose
 docker-compose up -d
 
 # 5. Access the app
@@ -82,18 +75,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-#### 4. Set up environment variables
-Create a `.env` file:
-
-```bash
-# Required for AlphaVantage data provider
-ALPHAVANTAGE_API_KEY=your_alpha_vantage_api_key
-```
-
-**Get API Key:**
-- AlphaVantage: https://www.alphavantage.co/support/#api-key
-
-#### 5. Run the application
+#### 4. Run the application
 ```bash
 streamlit run trader_app.py
 ```
@@ -105,11 +87,11 @@ The app will be available at http://localhost:8501
 ```
 auto-trader-ai/
 ├── trader_app.py          # Main Streamlit application
-├── data_provider.py       # AlphaVantage data fetching
+├── data_provider.py       # Yahoo Finance data fetching
 ├── strategy.py           # Trading strategy implementations
 ├── ai_models.py          # AI prediction models
 ├── model_transformer.py  # Transformer-based price prediction
-├── live_trading.py       # Live trading interface (Alpaca)
+# live trading interface removed
 ├── metrics.py           # Performance calculation utilities
 └── requirements.txt     # Python dependencies
 ```

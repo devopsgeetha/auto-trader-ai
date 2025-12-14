@@ -3,8 +3,8 @@ pandas
 yfinance
 matplotlib
 streamlit-autorefresh
-alpha-vantage
-alpaca-trade-api
+torch
+
 torch
 numpy
 scikit-learn
