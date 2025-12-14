@@ -15,13 +15,60 @@ A paper trading application built with Streamlit that implements various trading
 
 ## Setup
 
-### 1. Clone the repository
+Choose either **Docker** (recommended) or **Local** setup:
+
+### Option 1: Docker Deployment (Recommended) 🐳
+
+#### Prerequisites
+- Docker and Docker Compose installed
+- Get your AlphaVantage API key: https://www.alphavantage.co/support/#api-key
+
+#### Quick Start
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd auto-trader-ai
+
+# 2. Create .env file from example
+cp .env.example .env
+
+# 3. Edit .env and add your API key
+# ALPHAVANTAGE_API_KEY=your_actual_api_key
+
+# 4. Build and run with Docker Compose
+docker-compose up -d
+
+# 5. Access the app
+# Open browser: http://localhost:8501
+```
+
+#### Docker Commands
+```bash
+# Start the application
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the application
+docker-compose down
+
+# Rebuild after code changes
+docker-compose up -d --build
+
+# Stop and remove volumes
+docker-compose down -v
+```
+
+### Option 2: Local Setup
+
+#### 1. Clone the repository
 ```bash
 git clone <repository-url>
 cd auto-trader-ai
 ```
 
-### 2. Create virtual environment
+#### 2. Create virtual environment
 ```bash
 python -m venv .venv
 # Windows
@@ -30,31 +77,28 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+#### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Set up environment variables
-Create a `.env` file or set environment variables:
+#### 4. Set up environment variables
+Create a `.env` file:
 
 ```bash
 # Required for AlphaVantage data provider
 ALPHAVANTAGE_API_KEY=your_alpha_vantage_api_key
-
-# Optional: For live trading (Alpaca)
-ALPACA_KEY=your_alpaca_api_key
-ALPACA_SECRET=your_alpaca_secret_key
 ```
 
-**Get API Keys:**
+**Get API Key:**
 - AlphaVantage: https://www.alphavantage.co/support/#api-key
-- Alpaca (paper trading): https://alpaca.markets/
 
-### 5. Run the application
+#### 5. Run the application
 ```bash
 streamlit run trader_app.py
 ```
+
+The app will be available at http://localhost:8501
 
 ## Project Structure
 
